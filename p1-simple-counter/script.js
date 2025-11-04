@@ -3,7 +3,6 @@ const resetNum = document.getElementById("reset");
 const increaseNum = document.getElementById("increase");
 const counter = document.getElementById("counter");
 
-
 let numCounter = Number(counter.textContent);
 
 function colors(num) {
