@@ -3,7 +3,10 @@ const resetNum = document.getElementById("reset");
 const increaseNum = document.getElementById("increase");
 const counter = document.getElementById("counter");
 
-let numCounter = Number(counter.textContent);
+
+let savedCount = localStorage.getItem("counterValue");
+let numCounter = savedCount ? Number(savedCount) : 0;
+counter.textContent = numCounter;
 
 function colors(num) {
     if (num > 0) {
@@ -15,22 +18,27 @@ function colors(num) {
     }
 }
 
+colors(numCounter);
+
 function decrease() {
     numCounter -= 1;
     counter.textContent = numCounter;
     colors(numCounter);
+    localStorage.setItem("counterValue", numCounter);
 }
 
 function reset() {
     numCounter = 0;
     counter.textContent = numCounter;
     colors(numCounter);
+    localStorage.setItem("counterValue", numCounter);
 }
 
 function increase() {
     numCounter += 1;
     counter.textContent = numCounter;
     colors(numCounter);
+    localStorage.setItem("counterValue", numCounter);
 }
 
 
