@@ -17,6 +17,7 @@ function addTask(taskText) {
     taskList.appendChild(listItem);
     let numId = taskList.children.length;
     listItem.classList.add(`t${numId}`);
+    taskInput.value = "";
 }
 
 function clearAll() {
