@@ -80,7 +80,7 @@ li.completed {
 .delete-btn {
   background: transparent;
   color: crimson;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   border: none;
   cursor: pointer;
 }
