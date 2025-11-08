@@ -48,15 +48,16 @@ function addTask(taskText) {
 // mark tasks individually when clicked
 function markTask(taskId) {
     const listItem = document.querySelector(`.${taskId}`);
-    if (listItem.classList.contains("completed")) {
-        listItem.classList.remove("completed");
+    const textSpan = listItem.querySelector("span");
+    if (textSpan.classList.contains("completed")) {
+        textSpan.classList.remove("completed");
         tasks.forEach(task => {
             if (task.id === taskId) {
                 task.status = "pending";
             }
         });
     } else {
-        listItem.classList.add("completed");
+        textSpan.classList.add("completed");
         tasks.forEach(task => {
             if (task.id === taskId) {
                 task.status = "completed";
@@ -109,7 +110,7 @@ function loadTasks() {
         listItem.classList.add(task.id);
         //completed status
         if (task.status === "completed") {
-            listItem.classList.add("completed");
+            span.classList.add("completed");
         }
         //console.log(task.status);
     });

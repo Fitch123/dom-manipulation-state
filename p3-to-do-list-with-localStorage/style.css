@@ -71,10 +71,9 @@ li {
   transition: background 0.2s;
 }
 
-li.completed {
+.completed {
   text-decoration: line-through;
   color: gray;
-  background: #e2e2e2;
 }
 
 .delete-btn {
