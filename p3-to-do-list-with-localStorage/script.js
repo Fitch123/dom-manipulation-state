@@ -168,7 +168,16 @@ taskList.addEventListener("click", (event) => {
 });
 
 // clears task list
-clearAllBtn.addEventListener("click", clearAll);
+clearAllBtn.addEventListener("click", () => {
+    if (tasks.length === 0) return;
+
+    const confirmClear = confirm("Are you sure you want to delete all tasks?");
+    if (!confirmClear) return;
+
+    tasks = [];
+    saveTasks();
+    loadTasks();
+});
 
 // on load
 document.addEventListener('DOMContentLoaded', () => {
