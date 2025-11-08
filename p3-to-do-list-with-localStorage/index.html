@@ -7,6 +7,13 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="theme-switch">
+    <span class="icon moon">🌙</span>
+    <input type="checkbox" id="darkModeToggle" />
+    <label for="darkModeToggle" class="switch"></label>
+    <span class="icon sun">☀️</span>
+  </div>
+
   <div class="container">
     <h1>To-Do List ✅</h1>
     <div class="input-area">
@@ -15,6 +22,10 @@
     </div>
 
     <ul id="taskList"></ul>
+    <div class="task-summary">
+    <span id="completedCount">0</span> /
+    <span id="totalCount">0</span> tasks completed
+  </div>
 
     <button id="clearAll" class="clear-btn">Clear All</button>
   </div>

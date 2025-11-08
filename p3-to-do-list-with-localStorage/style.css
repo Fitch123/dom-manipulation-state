@@ -50,8 +50,8 @@ button {
   transition: background 0.2s;
 }
 
-button:hover {
-  background: #43a047;
+#addTask:hover {
+  background: #3a853e;
 }
 
 ul {
@@ -71,6 +71,10 @@ li {
   transition: background 0.2s;
 }
 
+body #taskList li:hover {
+  background-color: #dbdada;
+}
+
 .completed {
   text-decoration: line-through;
   color: gray;
@@ -84,7 +88,120 @@ li {
   cursor: pointer;
 }
 
+#clearAll:hover {
+  background-color: #b70104;
+}
+
 .clear-btn {
   margin-top: 1rem;
   background: crimson;
+}
+
+.task-summary {
+  margin-top: 8px;
+  padding-top: 5px;
+  border-top: 1px solid #ddd;
+  font-size: 0.95rem;
+  color: #333;
+  text-align: right;
+}
+
+.task-summary span {
+  font-weight: 600;
+  color: #007bff;
+}
+
+/* ====== DARK MODE STYLES ====== */
+body.dark-mode {
+  background-color: #383737;
+  color: #e6eef8;
+}
+
+body.dark-mode .container {
+  background-color: #383737;
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ====== SWITCH WRAPPER ====== */
+.theme-switch {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.2rem;
+}
+
+.theme-switch .icon {
+  user-select: none;
+}
+
+/* ====== TOGGLE SWITCH ====== */
+.switch {
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  background-color: #383737;
+  border-radius: 26px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.switch::before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 2px;
+  top: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+/* Hide checkbox */
+.theme-switch input {
+  display: none;
+}
+
+/* Active (dark mode) state */
+.theme-switch input:checked + .switch {
+  background-color: #ffffff;
+}
+
+/* Move the circle */
+.theme-switch input:checked + .switch::before {
+  transform: translateX(24px);
+  background-color: #383737; /* 🖤 Circle turns black in dark mode */
+}
+
+/* ====== TASK ITEMS IN DARK MODE ====== */
+body.dark-mode #taskList li {
+  background-color: #4a4a4a; /* Slightly lighter gray than background */
+  color: #ffffff;
+  border: 1px solid #5b5b5b;
+}
+
+/* Keep delete button visible in dark mode */
+body.dark-mode .delete-btn {
+  background-color: transparent;
+  color: #ff6b6b;
+}
+
+/* ====== TASK SUMMARY IN DARK MODE ====== */
+body.dark-mode .task-summary {
+  color: #ffffff;
+}
+
+body.dark-mode #taskList li:hover {
+  background-color: #5a5a5a;
+}
+
+body.dark-mode .completed {
+  text-decoration: line-through;
+  color: rgb(255, 255, 255);
 }

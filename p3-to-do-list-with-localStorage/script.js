@@ -2,6 +2,7 @@ const taskInput = document.getElementById("taskInput");
 const addTaskBtn = document.getElementById("addTask");
 const taskList = document.getElementById("taskList");
 const clearAllBtn = document.getElementById("clearAll");
+const darkToggle = document.getElementById("darkModeToggle");
 
 let tasks = [];
 
@@ -43,6 +44,9 @@ function addTask(taskText) {
     
     // converted into string
     saveTasks();
+
+    //taskCouunter
+    updateTaskSummary();
 }
 
 // mark tasks individually when clicked
@@ -65,6 +69,7 @@ function markTask(taskId) {
         })
     }
     saveTasks();
+    updateTaskSummary();
 }
 
 // deletes tasks individually
@@ -75,6 +80,7 @@ function deleteTask(taskId) {
     tasks = tasks.filter(task => task.id !== taskId);
     saveTasks();
     //console.log(tasks); 
+    updateTaskSummary();
 }
 
 function clearAll() {
@@ -83,6 +89,7 @@ function clearAll() {
         localStorage.removeItem("tasks");
         tasks = [];
     }
+    updateTaskSummary();
 }
 // helper function save
 function saveTasks() {
@@ -120,6 +127,15 @@ function loadTasks() {
     } else {
         taskCounter = 0;
     }
+    updateTaskSummary();
+}
+
+// helper function task counter
+function updateTaskSummary() {
+    const completed = tasks.filter(task => task.status === "completed").length;
+    const total = tasks.length;
+    document.getElementById("completedCount").textContent = completed;
+    document.getElementById("totalCount").textContent = total;
 }
 
 //EVENT LISTENERS//
@@ -157,4 +173,24 @@ clearAllBtn.addEventListener("click", clearAll);
 // on load
 document.addEventListener('DOMContentLoaded', () => {
     loadTasks();
+});
+
+// dark toggle local storage 
+document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        darkToggle.checked = true;
+    }
+});
+
+// dark toggle
+darkToggle.addEventListener("change", () => {
+    if (darkToggle.checked) {
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("theme", "dark");
+    } else {
+        document.body.classList.remove("dark-mode");
+        localStorage.setItem("theme", "light");
+    }
 });
