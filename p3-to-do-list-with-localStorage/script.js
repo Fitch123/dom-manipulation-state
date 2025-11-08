@@ -3,63 +3,137 @@ const addTaskBtn = document.getElementById("addTask");
 const taskList = document.getElementById("taskList");
 const clearAllBtn = document.getElementById("clearAll");
 
-const tasks = [{}];
+let tasks = [];
+
+let taskCounter = 0;
 
 function addTask(taskText) {
-    if (taskText === "" || taskText == null) {
+    if (!taskText) {
         window.alert("Please enter a task");
         return;
     }
-    //list items and text span
+
+    // list items and text span
     const listItem = document.createElement("li");
     const span = document.createElement("span");
     taskList.appendChild(listItem);
     listItem.appendChild(span);
     span.textContent = taskText;
-    //delete-btn
+
+    // delete-btn
     const deleteBtn = document.createElement("button");
     listItem.appendChild(deleteBtn);
     deleteBtn.classList.add("delete-btn");
     deleteBtn.textContent = "❌";
-    //task id number
+
+    // task id number
     let numId = taskList.children.length;
     listItem.classList.add(`t${numId}`);
-    //input textholder clear
+
+    // input textholder clear
     taskInput.value = "";
+
+    //task id counter
+    taskCounter++;
+
+    // create a new object
+    let newTask = {id: `t${taskCounter}`, text: taskText, status: "pending"};
+    tasks.push(newTask);
+    //console.log(tasks);
+    
+    // converted into string
+    saveTasks();
+}
+
+// mark tasks individually when clicked
+function markTask(taskId) {
+    const listItem = document.querySelector(`.${taskId}`);
+    if (listItem.classList.contains("completed")) {
+        listItem.classList.remove("completed");
+        tasks.forEach(task => {
+            if (task.id === taskId) {
+                task.status = "pending";
+            }
+        });
+    } else {
+        listItem.classList.add("completed");
+        tasks.forEach(task => {
+            if (task.id === taskId) {
+                task.status = "completed";
+            }
+        })
+    }
+    saveTasks();
+}
+
+// deletes tasks individually
+function deleteTask(taskId) {
+    const listItem = document.querySelector(`.${taskId}`);
+    listItem.remove();
+    // remove task inside the array
+    tasks = tasks.filter(task => task.id !== taskId);
+    saveTasks();
+    //console.log(tasks); 
 }
 
 function clearAll() {
     if (taskList.children.length > 0) {
         taskList.innerHTML = '';
+        localStorage.removeItem("tasks");
+        tasks = [];
     }
 }
+// helper function save
+function saveTasks() {
+    const taskString = JSON.stringify(tasks);
+    localStorage.setItem("tasks", taskString);
+}
 
-function markTask(taskId) {
-    const listItem = document.querySelector(`.${taskId}`);
-    if (listItem.classList.contains("completed")) {
-        listItem.classList.remove("completed");
+//helper function loads
+function loadTasks() {
+    tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    taskList.innerHTML = "";
+    tasks.forEach(task => {
+        // list items and text span
+        const listItem = document.createElement("li");
+        const span = document.createElement("span");
+        taskList.appendChild(listItem);
+        listItem.appendChild(span);
+        span.textContent = task.text;
+        // delete-btn
+        const deleteBtn = document.createElement("button");
+        listItem.appendChild(deleteBtn);
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.textContent = "❌";
+        // task id number
+        listItem.classList.add(task.id);
+        //completed status
+        if (task.status === "completed") {
+            listItem.classList.add("completed");
+        }
+        //console.log(task.status);
+    });
+    if (tasks.length > 0) {
+        const lastTask = tasks[tasks.length - 1];
+        taskCounter = Number(lastTask.id.replace("t", ""));
     } else {
-        listItem.classList.add("completed");
+        taskCounter = 0;
     }
 }
 
-function deleteTask(taskId) {
-    const listItem = document.querySelector(`.${taskId}`);
-    listItem.remove();    
-}
-
-
+//EVENT LISTENERS//
 // add task
 addTaskBtn.addEventListener("click", () => {
-    let userInput = taskInput.value;
-    addTask(userInput);
+    addTask(taskInput.value.trim());
 });
+
+// add task with enter
 taskInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
-        let userInput = taskInput.value;
-        addTask(userInput);
+        addTask(taskInput.value.trim());
     }
 });
+
 // mark or delete task
 taskList.addEventListener("click", (event) => {
     const clickedElement = event.target;
@@ -75,5 +149,11 @@ taskList.addEventListener("click", (event) => {
         markTask(taskId);
     }
 });
+
 // clears task list
 clearAllBtn.addEventListener("click", clearAll);
+
+// on load
+document.addEventListener('DOMContentLoaded', () => {
+    loadTasks();
+});
