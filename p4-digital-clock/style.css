@@ -1,0 +1,32 @@
+/* ====== GENERAL STYLES ====== */
+body {
+  background-color: #f4f4f4;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ====== CLOCK CONTAINER ====== */
+.clock-container {
+  background-color: white;
+  padding: 40px 60px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#clock {
+  font-size: 4rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.color-btn {
+  font-size: 1.5rem;
+  background-color: aliceblue;
+  color:#333;
+  border-radius: 6px;
+}
